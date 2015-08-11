@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AAMed</class>
+ <widget class="QMainWindow" name="AAMed">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1028</width>
+    <height>532</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>AAM Editor</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="CVImageWidget" name="cvImage" native="true">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>-9</x>
+      <y>1</y>
+      <width>640</width>
+      <height>480</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>640</width>
+      <height>480</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>16777215</width>
+      <height>16777215</height>
+     </size>
+    </property>
+    <property name="baseSize">
+     <size>
+      <width>640</width>
+      <height>480</height>
+     </size>
+    </property>
+    <property name="mouseTracking">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="listWidget">
+    <property name="geometry">
+     <rect>
+      <x>637</x>
+      <y>1</y>
+      <width>381</width>
+      <height>481</height>
+     </rect>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
+    </property>
+    <property name="selectionMode">
+     <enum>QAbstractItemView::MultiSelection</enum>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1028</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuAAM_Editor">
+    <property name="title">
+     <string>AAM Editor</string>
+    </property>
+    <addaction name="actionLoadModel"/>
+    <addaction name="actionLoadImage"/>
+    <addaction name="actionLoadTrainingData"/>
+    <addaction name="separator"/>
+    <addaction name="actionSaveTrainingData"/>
+    <addaction name="separator"/>
+    <addaction name="actionClose"/>
+   </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>View</string>
+    </property>
+    <widget class="QMenu" name="menuZoom">
+     <property name="title">
+      <string>Zoom</string>
+     </property>
+     <addaction name="actionZoomIn"/>
+     <addaction name="actionZoomOut"/>
+    </widget>
+    <widget class="QMenu" name="menuMove">
+     <property name="title">
+      <string>Move</string>
+     </property>
+     <addaction name="actionMoveLeft"/>
+     <addaction name="actionMoveRight"/>
+     <addaction name="actionMoveUp"/>
+     <addaction name="actionMoveDown"/>
+    </widget>
+    <widget class="QMenu" name="menuGeben_Sie_Text_ein">
+     <property name="title">
+      <string>Geben Sie Text ein</string>
+     </property>
+    </widget>
+    <addaction name="menuZoom"/>
+    <addaction name="menuMove"/>
+    <addaction name="separator"/>
+    <addaction name="menuGeben_Sie_Text_ein"/>
+   </widget>
+   <widget class="QMenu" name="menuPoints">
+    <property name="title">
+     <string>Points</string>
+    </property>
+    <widget class="QMenu" name="menuSelect">
+     <property name="title">
+      <string>Select</string>
+     </property>
+     <addaction name="actionSelect_All_Points"/>
+     <addaction name="actionDeselect_All_Points"/>
+     <addaction name="separator"/>
+     <addaction name="actionSelect_Mouth"/>
+     <addaction name="actionSelect_Nose"/>
+     <addaction name="actionSelect_Left_Eye"/>
+     <addaction name="actionSelect_Right_Eye"/>
+    </widget>
+    <widget class="QMenu" name="menuScale_Selected_Points">
+     <property name="title">
+      <string>Scale Selected Points</string>
+     </property>
+     <addaction name="actionScale_Up"/>
+     <addaction name="actionScale_Down"/>
+    </widget>
+    <widget class="QMenu" name="menuAlign_Groups">
+     <property name="title">
+      <string>Align Groups</string>
+     </property>
+     <addaction name="actionAlign_Mouth"/>
+     <addaction name="actionAlign_Nose"/>
+     <addaction name="actionAlign_Eyes"/>
+    </widget>
+    <addaction name="menuSelect"/>
+    <addaction name="menuScale_Selected_Points"/>
+    <addaction name="menuAlign_Groups"/>
+   </widget>
+   <addaction name="menuAAM_Editor"/>
+   <addaction name="menuView"/>
+   <addaction name="menuPoints"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionLoadImage">
+   <property name="text">
+    <string>Load Image</string>
+   </property>
+  </action>
+  <action name="actionClose">
+   <property name="text">
+    <string>Close</string>
+   </property>
+  </action>
+  <action name="actionLoadModel">
+   <property name="text">
+    <string>Load Model</string>
+   </property>
+  </action>
+  <action name="actionZoomIn">
+   <property name="text">
+    <string>Zoom In</string>
+   </property>
+   <property name="shortcut">
+    <string>+</string>
+   </property>
+  </action>
+  <action name="actionZoomOut">
+   <property name="text">
+    <string>Zoom Out</string>
+   </property>
+   <property name="toolTip">
+    <string>Zoom Out</string>
+   </property>
+   <property name="shortcut">
+    <string>-</string>
+   </property>
+  </action>
+  <action name="actionMoveLeft">
+   <property name="text">
+    <string>move Left</string>
+   </property>
+   <property name="shortcut">
+    <string>Left</string>
+   </property>
+  </action>
+  <action name="actionMoveRight">
+   <property name="text">
+    <string>moveRight</string>
+   </property>
+   <property name="shortcut">
+    <string>Right</string>
+   </property>
+  </action>
+  <action name="actionMoveUp">
+   <property name="text">
+    <string>moveUp</string>
+   </property>
+   <property name="shortcut">
+    <string>Up</string>
+   </property>
+  </action>
+  <action name="actionMoveDown">
+   <property name="text">
+    <string>moveDown</string>
+   </property>
+   <property name="shortcut">
+    <string>Down</string>
+   </property>
+  </action>
+  <action name="actionSaveTrainingData">
+   <property name="text">
+    <string>Save Training Data</string>
+   </property>
+  </action>
+  <action name="actionLoadTrainingData">
+   <property name="text">
+    <string>Load Training Data</string>
+   </property>
+  </action>
+  <action name="actionSelect_Mouth">
+   <property name="text">
+    <string>Select Mouth</string>
+   </property>
+  </action>
+  <action name="actionSelect_Nose">
+   <property name="text">
+    <string>Select Nose</string>
+   </property>
+  </action>
+  <action name="actionSelect_Left_Eye">
+   <property name="text">
+    <string>Select Left Eye</string>
+   </property>
+  </action>
+  <action name="actionSelect_Right_Eye">
+   <property name="text">
+    <string>Select Right Eye</string>
+   </property>
+  </action>
+  <action name="actionSelect_All_Points">
+   <property name="text">
+    <string>Select All Points</string>
+   </property>
+   <property name="toolTip">
+    <string>Select All Points</string>
+   </property>
+  </action>
+  <action name="actionDeselect_All_Points">
+   <property name="text">
+    <string>Deselect All Points</string>
+   </property>
+  </action>
+  <action name="actionScale_Up">
+   <property name="text">
+    <string>Scale Up</string>
+   </property>
+   <property name="shortcut">
+    <string>Shift+S</string>
+   </property>
+  </action>
+  <action name="actionScale_Down">
+   <property name="text">
+    <string>Scale Down</string>
+   </property>
+   <property name="shortcut">
+    <string>S</string>
+   </property>
+  </action>
+  <action name="actionAlign_Mouth">
+   <property name="text">
+    <string>Align Mouth</string>
+   </property>
+  </action>
+  <action name="actionAlign_Nose">
+   <property name="text">
+    <string>Align Nose</string>
+   </property>
+  </action>
+  <action name="actionAlign_Eyes">
+   <property name="text">
+    <string>Align Eyes</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>CVImageWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">../AAMlib/cvimagewidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
