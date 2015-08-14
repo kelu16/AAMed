@@ -83,12 +83,12 @@
      <x>0</x>
      <y>0</y>
      <width>1028</width>
-     <height>27</height>
+     <height>30</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuAAM_Editor">
     <property name="title">
-     <string>AAM Editor</string>
+     <string>AA&amp;M Editor</string>
     </property>
     <addaction name="actionLoadModel"/>
     <addaction name="actionLoadImage"/>
@@ -100,41 +100,34 @@
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
-     <string>View</string>
+     <string>&amp;View</string>
     </property>
     <widget class="QMenu" name="menuZoom">
      <property name="title">
-      <string>Zoom</string>
+      <string>&amp;Zoom</string>
      </property>
      <addaction name="actionZoomIn"/>
      <addaction name="actionZoomOut"/>
     </widget>
     <widget class="QMenu" name="menuMove">
      <property name="title">
-      <string>Move</string>
+      <string>&amp;Move</string>
      </property>
      <addaction name="actionMoveLeft"/>
      <addaction name="actionMoveRight"/>
      <addaction name="actionMoveUp"/>
      <addaction name="actionMoveDown"/>
     </widget>
-    <widget class="QMenu" name="menuGeben_Sie_Text_ein">
-     <property name="title">
-      <string>Geben Sie Text ein</string>
-     </property>
-    </widget>
     <addaction name="menuZoom"/>
     <addaction name="menuMove"/>
-    <addaction name="separator"/>
-    <addaction name="menuGeben_Sie_Text_ein"/>
    </widget>
    <widget class="QMenu" name="menuPoints">
     <property name="title">
-     <string>Points</string>
+     <string>&amp;Points</string>
     </property>
     <widget class="QMenu" name="menuSelect">
      <property name="title">
-      <string>Select</string>
+      <string>&amp;Select</string>
      </property>
      <addaction name="actionSelect_All_Points"/>
      <addaction name="actionDeselect_All_Points"/>
@@ -146,14 +139,14 @@
     </widget>
     <widget class="QMenu" name="menuScale_Selected_Points">
      <property name="title">
-      <string>Scale Selected Points</string>
+      <string>Scale Selected &amp;Points</string>
      </property>
      <addaction name="actionScale_Up"/>
      <addaction name="actionScale_Down"/>
     </widget>
     <widget class="QMenu" name="menuAlign_Groups">
      <property name="title">
-      <string>Align Groups</string>
+      <string>&amp;Align Groups</string>
      </property>
      <addaction name="actionAlign_Mouth"/>
      <addaction name="actionAlign_Nose"/>
@@ -172,20 +165,29 @@
    <property name="text">
     <string>Load Image</string>
    </property>
+   <property name="shortcut">
+    <string>I</string>
+   </property>
   </action>
   <action name="actionClose">
    <property name="text">
-    <string>Close</string>
+    <string>&amp;Close</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
    </property>
   </action>
   <action name="actionLoadModel">
    <property name="text">
     <string>Load Model</string>
    </property>
+   <property name="shortcut">
+    <string>M</string>
+   </property>
   </action>
   <action name="actionZoomIn">
    <property name="text">
-    <string>Zoom In</string>
+    <string>&amp;Zoom In</string>
    </property>
    <property name="shortcut">
     <string>+</string>
@@ -193,7 +195,7 @@
   </action>
   <action name="actionZoomOut">
    <property name="text">
-    <string>Zoom Out</string>
+    <string>Zoom &amp;Out</string>
    </property>
    <property name="toolTip">
     <string>Zoom Out</string>
@@ -204,7 +206,7 @@
   </action>
   <action name="actionMoveLeft">
    <property name="text">
-    <string>move Left</string>
+    <string>&amp;move Left</string>
    </property>
    <property name="shortcut">
     <string>Left</string>
@@ -212,7 +214,7 @@
   </action>
   <action name="actionMoveRight">
    <property name="text">
-    <string>moveRight</string>
+    <string>m&amp;oveRight</string>
    </property>
    <property name="shortcut">
     <string>Right</string>
@@ -220,7 +222,7 @@
   </action>
   <action name="actionMoveUp">
    <property name="text">
-    <string>moveUp</string>
+    <string>mo&amp;veUp</string>
    </property>
    <property name="shortcut">
     <string>Up</string>
@@ -228,7 +230,7 @@
   </action>
   <action name="actionMoveDown">
    <property name="text">
-    <string>moveDown</string>
+    <string>mov&amp;eDown</string>
    </property>
    <property name="shortcut">
     <string>Down</string>
@@ -238,30 +240,48 @@
    <property name="text">
     <string>Save Training Data</string>
    </property>
+   <property name="shortcut">
+    <string>S</string>
+   </property>
   </action>
   <action name="actionLoadTrainingData">
    <property name="text">
     <string>Load Training Data</string>
+   </property>
+   <property name="shortcut">
+    <string>T</string>
    </property>
   </action>
   <action name="actionSelect_Mouth">
    <property name="text">
     <string>Select Mouth</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+M</string>
+   </property>
   </action>
   <action name="actionSelect_Nose">
    <property name="text">
-    <string>Select Nose</string>
+    <string>Select &amp;ose</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
    </property>
   </action>
   <action name="actionSelect_Left_Eye">
    <property name="text">
     <string>Select Left Eye</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+L</string>
+   </property>
   </action>
   <action name="actionSelect_Right_Eye">
    <property name="text">
     <string>Select Right Eye</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+R</string>
    </property>
   </action>
   <action name="actionSelect_All_Points">
@@ -271,15 +291,21 @@
    <property name="toolTip">
     <string>Select All Points</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+A</string>
+   </property>
   </action>
   <action name="actionDeselect_All_Points">
    <property name="text">
     <string>Deselect All Points</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+D</string>
+   </property>
   </action>
   <action name="actionScale_Up">
    <property name="text">
-    <string>Scale Up</string>
+    <string>&amp;Scale Up</string>
    </property>
    <property name="shortcut">
     <string>Shift+S</string>
@@ -287,7 +313,7 @@
   </action>
   <action name="actionScale_Down">
    <property name="text">
-    <string>Scale Down</string>
+    <string>Scale &amp;Down</string>
    </property>
    <property name="shortcut">
     <string>S</string>
@@ -297,15 +323,24 @@
    <property name="text">
     <string>Align Mouth</string>
    </property>
+   <property name="shortcut">
+    <string>Alt+M</string>
+   </property>
   </action>
   <action name="actionAlign_Nose">
    <property name="text">
     <string>Align Nose</string>
    </property>
+   <property name="shortcut">
+    <string>Alt+N</string>
+   </property>
   </action>
   <action name="actionAlign_Eyes">
    <property name="text">
     <string>Align Eyes</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+E</string>
    </property>
   </action>
  </widget>

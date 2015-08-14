@@ -149,7 +149,7 @@ void AAMed::setViewWindow(double x, double y) {
 }
 
 void AAMed::loadImage() {
-    QString fileName = QFileDialog::getOpenFileName(this, "Open file", "", "*.jpg");
+    QString fileName = QFileDialog::getOpenFileName(this, "Open file", "", tr("Image Files (*.png *.jpg *.gif)"));
     if(!fileName.isEmpty()) {
         loadImage(fileName.toLocal8Bit().data());
     }
@@ -365,6 +365,9 @@ void AAMed::loadTrainingData(std::string fileName) {
         ui->listWidget->addItem(QString::fromStdString(desc.at(i)));
     }
 
+    imageName = fileName.substr(fileName.find_last_of("/\\") + 1);
+    this->setWindowTitle(QString::fromStdString(imageName));
+
     this->showImage();
 }
 
@@ -441,7 +444,9 @@ void AAMed::mouseHandler(QMouseEvent *ev, QPoint pos) {
     int events;
     int x = pos.x();
     int y = pos.y();
+    int id = -1;
     QString statusText = "";
+    Qt::CursorShape cursor = Qt::ArrowCursor;
 
     Point imgPos = Point((this->viewX+x)/pow(2,this->zoom), (this->viewY+y)/pow(2,this->zoom));
 
@@ -460,49 +465,71 @@ void AAMed::mouseHandler(QMouseEvent *ev, QPoint pos) {
     }
 
     if(this->model.isInitialized()) {
-        int id = this->model.findPointToPosition(imgPos, 1);
+        id = this->model.findPointToPosition(imgPos, 1);
+    }
 
-        switch(events) {
-        case CV_EVENT_LBUTTONDOWN:
-            if(id > -1) {
-                this->mouseSource = Point(x,y);
-                this->mouseMovePoints = true;
-                ui->listWidget->item(id)->setSelected(true);
-            } else {
-                this->mouseSource = Point(x,y);
-                this->mouseMoveViewport = true;
-                this->setCursor(Qt::ClosedHandCursor);
-            }
-            break;
-        case CV_EVENT_LBUTTONUP:
-            if(id > -1) {
+    switch(events) {
+    case CV_EVENT_LBUTTONDOWN:
+        if(id > -1) {
+            this->mouseSource = Point(x,y);
+            this->mouseMovePoints = true;
+            ui->listWidget->item(id)->setSelected(true);
+        } else {
+            this->mouseSource = Point(x,y);
+            this->mouseMoveViewport = true;
+            cursor = Qt::ClosedHandCursor;
+        }
+        break;
+    case CV_EVENT_LBUTTONUP:
+        if(id > -1) {
 
-            } else if(!this->mouseMoveViewport) {
-                int size = ui->listWidget->count();
-
-                for(int i=0; i<size; i++) {
-                    ui->listWidget->item(i)->setSelected(false);
-                }
-            }
-
-            this->mouseMovePoints = false;
-            this->mouseMoveViewport = false;
-            this->setCursor(Qt::ArrowCursor);
-            break;
-        case CV_EVENT_RBUTTONDOWN: {
-            mouseSource = Point(x,y);
-            this->mouseSelection = true;
-            this->model.unselectAllPoints();
-
+        } else if(!this->mouseMoveViewport) {
             int size = ui->listWidget->count();
 
             for(int i=0; i<size; i++) {
                 ui->listWidget->item(i)->setSelected(false);
             }
-            }
-            break;
-        case CV_EVENT_RBUTTONUP: {
-            this->mouseSelection = false;
+        }
+
+        this->mouseMovePoints = false;
+        this->mouseMoveViewport = false;
+        break;
+    case CV_EVENT_RBUTTONDOWN: {
+        mouseSource = Point(x,y);
+        this->mouseSelection = true;
+        this->model.unselectAllPoints();
+
+        int size = ui->listWidget->count();
+
+        for(int i=0; i<size; i++) {
+            ui->listWidget->item(i)->setSelected(false);
+        }
+        }
+        break;
+    case CV_EVENT_RBUTTONUP: {
+        this->mouseSelection = false;
+        this->selection = Rect(mouseSource, Point(x,y));
+
+        Rect selectionInView = this->selection + Point(this->viewX, this->viewY);
+        Rect selectionZoomed = Rect(selectionInView.tl()/pow(2,this->zoom), selectionInView.br()/pow(2,this->zoom));
+
+        this->model.selectPointsInRect(selectionZoomed);
+        vector <int> selectedPoints = this->model.getSelectedPoints();
+        int numSelectedPoints = selectedPoints.size();
+        for(int i=0; i<numSelectedPoints; i++) {
+            int id = selectedPoints.at(i);
+            ui->listWidget->item(id)->setSelected(true);
+        }
+        }
+        break;
+    case CV_EVENT_MOUSEMOVE:
+        int size = ui->listWidget->count();
+
+        for(int i=0; i<size; i++) {
+            ui->listWidget->item(i)->setFont(QFont());
+        }
+
+        if(this->mouseSelection) {
             this->selection = Rect(mouseSource, Point(x,y));
 
             Rect selectionInView = this->selection + Point(this->viewX, this->viewY);
@@ -515,54 +542,29 @@ void AAMed::mouseHandler(QMouseEvent *ev, QPoint pos) {
                 int id = selectedPoints.at(i);
                 ui->listWidget->item(id)->setSelected(true);
             }
-            }
-            break;
-        case CV_EVENT_MOUSEMOVE:
-            int size = ui->listWidget->count();
-
-            for(int i=0; i<size; i++) {
-                ui->listWidget->item(i)->setFont(QFont());
-            }
-            if(id > -1) {
-                this->setCursor(Qt::PointingHandCursor);
-                QFont fontBold;
-                fontBold.setBold(true);
-                ui->listWidget->item(id)->setFont(fontBold);
-                statusText = "Point "+QString::number(id)+": "+ui->listWidget->item(id)->text();
-            } else {
-                this->setCursor(Qt::ArrowCursor);
-            }
-
-            if(this->mouseSelection) {
-                this->selection = Rect(mouseSource, Point(x,y));
-
-                Rect selectionInView = this->selection + Point(this->viewX, this->viewY);
-                Rect selectionZoomed = Rect(selectionInView.tl()/pow(2,this->zoom), selectionInView.br()/pow(2,this->zoom));
-
-                this->model.selectPointsInRect(selectionZoomed);
-                vector <int> selectedPoints = this->model.getSelectedPoints();
-                int numSelectedPoints = selectedPoints.size();
-                for(int i=0; i<numSelectedPoints; i++) {
-                    int id = selectedPoints.at(i);
-                    ui->listWidget->item(id)->setSelected(true);
-                }
-            } else if(this->mouseMovePoints) {
-                float dx = (mouseSource.x-x)/pow(2,this->zoom);
-                float dy = (mouseSource.y-y)/pow(2,this->zoom);
-                this->model.moveSelectedVertices(dx, dy);
-                this->mouseSource = Point(x,y);
-            } else if(this->mouseMoveViewport) {
-                float dx = (mouseSource.x-x);
-                float dy = (mouseSource.y-y);
-                this->mouseSource = Point(x,y);
-                this->setViewWindow(this->viewX+dx, this->viewY+dy);
-                this->setCursor(Qt::ClosedHandCursor);
-            }
-
-            break;
+        } else if(this->mouseMovePoints) {
+            float dx = (mouseSource.x-x)/pow(2,this->zoom);
+            float dy = (mouseSource.y-y)/pow(2,this->zoom);
+            this->model.moveSelectedVertices(dx, dy);
+            this->mouseSource = Point(x,y);
+        } else if(this->mouseMoveViewport) {
+            float dx = (mouseSource.x-x);
+            float dy = (mouseSource.y-y);
+            this->mouseSource = Point(x,y);
+            this->setViewWindow(this->viewX+dx, this->viewY+dy);
+            cursor = Qt::ClosedHandCursor;
+        } else if(id > -1) {
+            QFont fontBold;
+            fontBold.setBold(true);
+            ui->listWidget->item(id)->setFont(fontBold);
+            statusText = "Point "+QString::number(id)+": "+ui->listWidget->item(id)->text();
+            cursor = Qt::PointingHandCursor;
         }
+
+        break;
     }
 
+    this->setCursor(cursor);
     this->ui->statusBar->showMessage("["+QString::number(imgPos.x)+";"+QString::number(imgPos.y)+"] "+statusText);
     showImage();
 }
