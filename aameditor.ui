@@ -241,7 +241,7 @@
     <string>Save Training Data</string>
    </property>
    <property name="shortcut">
-    <string>S</string>
+    <string>Ctrl+S</string>
    </property>
   </action>
   <action name="actionLoadTrainingData">
