@@ -340,6 +340,7 @@ void AAMed::loadModel(std::string fileName) {
     }
 
     if(!this->image.empty()) {
+        this->model.setImage(this->image);
         this->alignModel();
     }
 }
