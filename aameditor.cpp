@@ -389,6 +389,7 @@ void AAMed::setImage(Mat img) {
     this->viewY = 0;
     this->image = img;
     this->zoomedImage = this->image.clone();
+    this->model.setImage(image);
     ui->cvImage->showImage(this->image);
 }
 
